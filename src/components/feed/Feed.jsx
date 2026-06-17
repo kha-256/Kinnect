@@ -1,10 +1,10 @@
-import "./feed.css";
 import Share from "../share/Share";
 import Post from "../post/Post";
 import { getTimelinePost, getProfilePosts } from "../../store/slices/PostSlice";
 import { getUser } from "../../store/slices/PostUser";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Box, Stack, Typography } from "@mui/material";
 
 export default function Feed({ username }) {
   const dispatch = useDispatch();
@@ -29,14 +29,22 @@ export default function Feed({ username }) {
   }, [dispatch, posts]);
 
   return (
-    <div className="feed">
-      <div className="feedWrapper">
-        <Share />
-      </div>
-      {loading && <span className="feedLoading">Loading posts...</span>}
-      {posts?.map((post) => (
-        <Post key={post.id} post={post} user={users[post.userId]} />
-      ))}
-    </div>
+    <Box sx={{ flex: 5.5 }}>
+      <Stack spacing={0}>
+        <Box sx={{ p: 2.5 }}>
+          <Share />
+        </Box>
+
+        {loading && (
+          <Typography variant="body2" color="text.secondary" sx={{ px: 2.5, pb: 2 }}>
+            Loading posts...
+          </Typography>
+        )}
+
+        {posts?.map((post) => (
+          <Post key={post.id} post={post} user={users[post.userId]} />
+        ))}
+      </Stack>
+    </Box>
   );
 }

@@ -1,7 +1,7 @@
-import "./profile.css";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
@@ -26,29 +26,46 @@ export default function Profile() {
   return (
     <>
       <Topbar />
-      <div className="profile">
+      <Box sx={{ display: "flex" }}>
         <Sidebar />
-        <div className="profileRight">
-          <div className="profileRightTop">
-            <div className="profileCover">
-              <img className="profileCoverImg" src={`${PF}post/3.jpeg`} alt="" />
-              <img
-                className="profileUserImg"
-                src={`${PF}${profileUser?.profilePicture || "person/7.jpeg"}`}
+        <Box sx={{ flex: 9 }}>
+          <Box>
+            <Box sx={{ height: 320, position: "relative" }}>
+              <Box
+                component="img"
+                src={`${PF}post/3.jpeg`}
                 alt=""
+                sx={{ width: "100%", height: 250, objectFit: "cover", display: "block" }}
               />
-            </div>
-            <div className="profileInfo">
-              <h4 className="profileInfoName">{profileUser?.username || username}</h4>
-              <span className="profileInfoDesc">Hello my friends!</span>
-            </div>
-          </div>
-          <div className="profileRightBottom">
+              <Avatar
+                src={`${PF}${profileUser?.profilePicture || "person/7.jpeg"}`}
+                alt={profileUser?.username || username}
+                sx={{
+                  width: 150,
+                  height: 150,
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  top: 150,
+                  mx: "auto",
+                  border: "3px solid",
+                  borderColor: "common.white",
+                }}
+              />
+            </Box>
+            <Stack alignItems="center" justifyContent="center" sx={{ py: 1 }}>
+              <Typography variant="h5" fontWeight={600}>
+                {profileUser?.username || username}
+              </Typography>
+              <Typography fontWeight={300}>Hello my friends!</Typography>
+            </Stack>
+          </Box>
+          <Box sx={{ display: "flex" }}>
             <Feed username={username} />
             <Rightbar profile />
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     </>
   );
 }

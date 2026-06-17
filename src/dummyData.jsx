@@ -2,8 +2,8 @@ export const Users = [
   {
     id: 1,
     profilePicture: "person/1.jpeg",
-    username: "Safak Kocaoglu",
-    email: "safak@example.com",
+    username: "Khadija Noor",
+    email: "khadija@example.com",
     password: "123456",
   },
   {

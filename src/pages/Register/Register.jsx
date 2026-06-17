@@ -283,12 +283,12 @@ export default function Register() {
 
                 <Stack spacing={0.75}>
                   <Typography sx={fieldLabelSx}>
-                    Mobile number or email address
+                    Email address
                   </Typography>
                   <RegisterTextField
                     name="email"
                     type="email"
-                    placeholder="Mobile number or email address"
+                    placeholder="Email address"
                     autoComplete="email"
                   />
                   <Typography sx={helperTextSx}>

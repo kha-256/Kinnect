@@ -1,4 +1,3 @@
-import "./sidebar.css";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import ChatIcon from "@mui/icons-material/Chat";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -11,6 +10,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { logout } from "../../store/slices/Userslice";
 import CloseFriend from "../closeFriend/CloseFriend";
 
@@ -24,59 +24,89 @@ export default function Sidebar() {
     navigate("/");
   };
 
+  const sidebarItems = [
+    { label: "Feed", icon: <RssFeedIcon /> },
+    { label: "Chats", icon: <ChatIcon /> },
+    { label: "Videos", icon: <PlayCircleIcon /> },
+    { label: "Groups", icon: <GroupsIcon /> },
+    { label: "Bookmarks", icon: <BookmarkIcon /> },
+    { label: "Questions", icon: <HelpOutlineIcon /> },
+    { label: "Jobs", icon: <WorkIcon /> },
+    { label: "Events", icon: <EventIcon /> },
+    { label: "Courses", icon: <SchoolIcon /> },
+  ];
+
   return (
-    <div className="sidebar">
-      <div className="sidebarWrapper">
-        <ul className="sidebarList">
-          <li className="sidebarListItem">
-            <RssFeedIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Feed</span>
-          </li>
-          <li className="sidebarListItem">
-            <ChatIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Chats</span>
-          </li>
-          <li className="sidebarListItem">
-            <PlayCircleIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Videos</span>
-          </li>
-          <li className="sidebarListItem">
-            <GroupsIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Groups</span>
-          </li>
-          <li className="sidebarListItem">
-            <BookmarkIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Bookmarks</span>
-          </li>
-          <li className="sidebarListItem">
-            <HelpOutlineIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Questions</span>
-          </li>
-          <li className="sidebarListItem">
-            <WorkIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Jobs</span>
-          </li>
-          <li className="sidebarListItem">
-            <EventIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Events</span>
-          </li>
-          <li className="sidebarListItem">
-            <SchoolIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Courses</span>
-          </li>
-          <li className="sidebarListItem sidebarLogout" onClick={handleLogout}>
-            <LogoutIcon className="sidebarIcon" />
-            <span className="sidebarListItemText">Logout</span>
-          </li>
-        </ul>
-        <button className="sidebarButton">Show More</button>
-        <hr className="sidebarHr" />
-        <ul className="sidebarFriendList">
-          {allUsers.map((u) => (
+    <Box
+      sx={{
+        flex: { xs: 0, sm: 0, md: 3.5, lg: 4 },
+        display: { xs: "none", sm: "none", md: "block" },
+        height: "calc(100vh - 56px)",
+        overflowY: "auto",
+        position: "sticky",
+        top: 56,
+        borderRight: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      <Box sx={{ px: { sm: 1, md: 2 }, py: 2 }}>
+        <List disablePadding>
+          {sidebarItems.map((item) => (
+            <ListItemButton
+              key={item.label}
+              sx={{
+                mb: 0.5,
+                borderRadius: 2,
+                px: { sm: 1, md: 1.5 },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 36, color: "text.primary" }}>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={item.label}
+                primaryTypographyProps={{ fontSize: { sm: 14, md: 15 }, fontWeight: 500 }}
+              />
+            </ListItemButton>
+          ))}
+          <ListItemButton
+            onClick={handleLogout}
+            sx={{
+              borderRadius: 2,
+              color: "error.main",
+              px: { sm: 1, md: 1.5 },
+              "& .MuiListItemIcon-root": { color: "error.main" },
+              "&:hover": { backgroundColor: "error.50" },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 36 }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="Logout"
+              primaryTypographyProps={{ fontSize: { sm: 14, md: 15 }, fontWeight: 600 }}
+            />
+          </ListItemButton>
+        </List>
+
+        {/* <Button
+          variant="contained"
+          size="small"
+          sx={{ mt: 1.5, borderRadius: 2, textTransform: "none", px: 2.5 }}
+        >
+          Show More
+        </Button> */}
+
+        <Divider sx={{ my: 2 }} />
+
+        <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2, }}>
+          Close Friends
+        </Typography>
+
+        <Box component="ul" sx={{ p: 0, m: 0, listStyle: "none" }}>
+          {allUsers.slice(0,5).map((u) => (
             <CloseFriend key={u.id} user={u} />
           ))}
-        </ul>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }

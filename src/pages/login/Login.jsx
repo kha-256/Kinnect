@@ -17,7 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const LOGIN_HERO_IMAGE =
-  "https://static.xx.fbcdn.net/rsrc.php/yB/r/83zWJdc6PJI.webp";
+  "https://static.xx.fbcdn.net/rsrc.php/yb/r/HpEiFYDux5j.webp";
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -279,12 +279,12 @@ export default function Login() {
                   <Stack spacing={2}>
                     <Stack spacing={0.75}>
                       <Typography sx={fieldLabelSx}>
-                        Email or mobile number
+                        Email
                       </Typography>
                       <LoginTextField
                         name="email"
                         type="email"
-                        placeholder="Email or mobile number"
+                        placeholder="Email"
                         autoComplete="email"
                       />
                     </Stack>

@@ -7,13 +7,16 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
 
 const verifySchema = Yup.object({
   code: Yup.string()
     .trim()
     .required("Please enter a code")
-    .min(4, "Please enter a valid code"),
+    .matches(/^\d{5}$/, "Code must be exactly 5 digits"),
 });
 
 const initialValues = {
@@ -181,6 +184,7 @@ function VerifyTextField({ name, ...props }) {
 
 export default function VerifyCode() {
   const [loading, setLoading] = useState(false);
+  const [showResendAlert, setShowResendAlert] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const identifier = location.state?.identifier;
@@ -196,10 +200,12 @@ export default function VerifyCode() {
     navigate("/forgot-password/reset", { state: { identifier } });
   };
 
-  const handleResendCode = async () => {
+  const handleResendCode = async (resetForm) => {
     setLoading(true);
+    resetForm();
     await new Promise((resolve) => setTimeout(resolve, 300));
     setLoading(false);
+    setShowResendAlert(true);
   };
 
   return (
@@ -228,16 +234,20 @@ export default function VerifyCode() {
           validationSchema={verifySchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue, resetForm }) => (
             <Box component={Form} sx={formSx}>
               <Stack spacing={2.5}>
                 <Stack spacing={0.75} sx={{ mb: 1.5 }}>
                   <Typography sx={fieldLabelSx}>Enter code</Typography>
                   <VerifyTextField
                     name="code"
-                    placeholder="Enter code"
+                    placeholder="Enter 5-digit code"
                     autoComplete="one-time-code"
-                    inputProps={{ inputMode: "numeric" }}
+                    inputProps={{ inputMode: "numeric", maxLength: 5, pattern: "[0-9]*" }}
+                    onChange={(e) => {
+                      const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 5);
+                      setFieldValue("code", digitsOnly);
+                    }}
                   />
                 </Stack>
 
@@ -256,7 +266,7 @@ export default function VerifyCode() {
                   component="button"
                   type="button"
                   disabled={loading}
-                  onClick={handleResendCode}
+                  onClick={() => handleResendCode(resetForm)}
                   sx={secondaryButtonSx}
                 >
                   Didn&apos;t get a code?
@@ -266,6 +276,32 @@ export default function VerifyCode() {
           )}
         </Formik>
       </Box>
+      <Snackbar
+        open={showResendAlert}
+        autoHideDuration={3000}
+        onClose={() => setShowResendAlert(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert
+          onClose={() => setShowResendAlert(false)}
+          severity="success"
+          icon={false}
+          sx={{
+            bgcolor: "#243746",
+            color: "#fff",
+            borderRadius: "16px",
+            width: { xs: "calc(100vw - 32px)", sm: 420 },
+            "& .MuiAlert-message": {
+              py: 0.5,
+            },
+          }}
+        >
+          <AlertTitle sx={{ m: 0, fontWeight: 700, color: "#fff" }}>
+            Code successfully sent
+          </AlertTitle>
+          Your code was successfully sent via email.
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

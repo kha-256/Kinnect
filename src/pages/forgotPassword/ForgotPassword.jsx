@@ -12,7 +12,8 @@ import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
 const identifySchema = Yup.object({
   identifier: Yup.string()
     .trim()
-    .required("Please enter your email or mobile number"),
+    .email("Please enter a valid email address")
+    .required("Please enter your email address"),
 });
 
 const initialValues = {
@@ -190,7 +191,7 @@ export default function ForgotPassword() {
         </Typography>
 
         <Typography sx={subtitleSx}>
-          Enter your mobile number or email address.
+          Enter your email address.
         </Typography>
 
         <Formik
@@ -203,11 +204,11 @@ export default function ForgotPassword() {
               <Stack spacing={4}>
                 <Stack spacing={0.75}>
                   <Typography sx={fieldLabelSx}>
-                    Mobile number or email address
+                    Email address
                   </Typography>
                   <IdentifyTextField
                     name="identifier"
-                    placeholder="Mobile number or email address"
+                    placeholder="Email address"
                     autoComplete="email"
                   />
                 </Stack>

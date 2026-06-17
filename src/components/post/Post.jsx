@@ -1,6 +1,13 @@
-import "./Post.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 export default function Post({ post, user }) {
   const [like, setLike] = useState(post.like);
@@ -16,37 +23,82 @@ export default function Post({ post, user }) {
   if (!user) return null;
 
   return (
-    <div className="post">
-      <div className="postWrapper">
-        <div className="postTop">
-          <div className="postTopLeft">
-            <img
-              className="postProfileImg"
+    <Paper
+      elevation={3}
+      sx={{
+        width: "92%",
+        mx: "auto",
+        mb: 3.75,
+        borderRadius: 2.5,
+        overflow: "hidden",
+      }}
+    >
+      <Box sx={{ p: 1.25 }}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack direction="row" alignItems="center" spacing={1.25}>
+            <Avatar
               src={`${PF}${user.profilePicture || "person/Default_Profile_Picture.jpg"}`}
-              alt=""
+              alt={user.username}
+              sx={{ width: 32, height: 32 }}
             />
-            <span className="postUserName">{user.username}</span>
-            <span className="postDate">{post.date}</span>
-          </div>
-          <div className="postTopRight">
+            <Typography variant="body2" fontWeight={500}>
+              {user.username}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {post.date}
+            </Typography>
+          </Stack>
+          <IconButton size="small" aria-label="post options">
             <MoreVertIcon />
-          </div>
-        </div>
-        <div className="postCenter">
-          {post.desc && <span className="postText">{post.desc}</span>}
-          <img className="postImg" src={`${PF}${post.photo}`} alt="" />
-        </div>
-        <div className="postBottom">
-          <div className="postBottomLeft">
-            <img className="likeIcon" src={`${PF}like.png`} alt="" onClick={likeHandler} />
-            <img className="likeIcon" src={`${PF}heart.png`} alt="" onClick={likeHandler} />
-            <span className="postLikeCounter">{like} people like it</span>
-          </div>
-          <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
-          </div>
-        </div>
-      </div>
-    </div>
+          </IconButton>
+        </Stack>
+
+        <Stack spacing={2.5} sx={{ my: 2.5 }}>
+          {post.desc && (
+            <Typography variant="body2">{post.desc}</Typography>
+          )}
+          <Box
+            component="img"
+            src={`${PF}${post.photo}`}
+            alt=""
+            sx={{
+              width: "100%",
+              maxHeight: 500,
+              objectFit: "contain",
+            }}
+          />
+        </Stack>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Stack direction="row" alignItems="center" spacing={0.625}>
+            <Box
+              component="img"
+              src={`${PF}like.png`}
+              alt="like"
+              onClick={likeHandler}
+              sx={{ width: 32, height: 32, cursor: "pointer" }}
+            />
+            <Box
+              component="img"
+              src={`${PF}heart.png`}
+              alt="heart"
+              onClick={likeHandler}
+              sx={{ width: 32, height: 32, cursor: "pointer" }}
+            />
+            <Typography variant="body2">{like} people like it</Typography>
+          </Stack>
+          <Typography
+            variant="body2"
+            sx={{
+              cursor: "pointer",
+              borderBottom: "1px dashed",
+              borderColor: "text.secondary",
+            }}
+          >
+            {post.comment} comments
+          </Typography>
+        </Stack>
+      </Box>
+    </Paper>
   );
 }
