@@ -29,9 +29,18 @@ export default function Feed({ username }) {
   }, [dispatch, posts]);
 
   return (
-    <Box sx={{ flex: 5.5 }}>
+    <Box
+      sx={{
+        flex: { xs: 1, md: 5.5 },
+        minWidth: 0,
+        width: "100%",
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        overflow: "hidden",
+      }}
+    >
       <Stack spacing={0}>
-        <Box sx={{ p: 2.5 }}>
+        <Box sx={{ p: { xs: 1.5, sm: 2.5 } }}>
           <Share />
         </Box>
 

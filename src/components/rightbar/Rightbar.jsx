@@ -29,7 +29,7 @@ export default function Rightbar({ profile }) {
         sx={{ width: "100%", borderRadius: 2.5 }}
       />
 
-      <Box>
+      {/* <Box>
         <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2.5 }}>
           Online Friends
         </Typography>
@@ -38,7 +38,7 @@ export default function Rightbar({ profile }) {
             <Online key={u.id} user={u} />
           ))}
         </Stack>
-      </Box>
+      </Box> */}
     </Stack>
   );
 

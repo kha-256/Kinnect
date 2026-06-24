@@ -48,18 +48,33 @@ export default function Share() {
 
         <Divider sx={{ my: 2.5 }} />
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack direction="row" alignItems="center" spacing={1.25} sx={{ ml: 1 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          gap={1}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={{ xs: 1, sm: 1.25 }}
+            sx={{ ml: 1, flex: 1, minWidth: 0, flexWrap: "wrap", rowGap: 1 }}
+          >
             {shareOptions.map((option) => (
               <Stack
                 key={option.label}
                 direction="row"
                 alignItems="center"
                 spacing={0.375}
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: "pointer", flexShrink: 0 }}
               >
                 {option.icon}
-                <Typography variant="body2" fontWeight={500} sx={{ fontSize: 13 }}>
+                <Typography
+                  variant="body2"
+                  fontWeight={500}
+                  sx={{ fontSize: 13, display: { xs: "none", sm: "block" } }}
+                >
                   {option.label}
                 </Typography>
               </Stack>

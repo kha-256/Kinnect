@@ -26,25 +26,28 @@ export default function Post({ post, user }) {
     <Paper
       elevation={3}
       sx={{
-        width: "92%",
+        width: { xs: "94%", sm: "94%" },
         mx: "auto",
         mb: 3.75,
         borderRadius: 2.5,
         overflow: "hidden",
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        
       }}
     >
       <Box sx={{ p: 1.25 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack direction="row" alignItems="center" spacing={1.25}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ minWidth: 0 }}>
+          <Stack direction="row" alignItems="center" spacing={1.25} sx={{ minWidth: 0, flex: 1 }}>
             <Avatar
               src={`${PF}${user.profilePicture || "person/Default_Profile_Picture.jpg"}`}
               alt={user.username}
-              sx={{ width: 32, height: 32 }}
+              sx={{ width: 32, height: 32, flexShrink: 0 }}
             />
-            <Typography variant="body2" fontWeight={500}>
+            <Typography variant="body2" fontWeight={500} noWrap>
               {user.username}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" color="text.secondary" noWrap sx={{ flexShrink: 0 }}>
               {post.date}
             </Typography>
           </Stack>
@@ -69,8 +72,15 @@ export default function Post({ post, user }) {
           />
         </Stack>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Stack direction="row" alignItems="center" spacing={0.625}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          gap={1}
+          sx={{ minWidth: 0 }}
+        >
+          <Stack direction="row" alignItems="center" spacing={0.625} sx={{ minWidth: 0 }}>
             <Box
               component="img"
               src={`${PF}like.png`}
