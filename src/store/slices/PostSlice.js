@@ -24,7 +24,26 @@ export const getProfilePosts = createAsyncThunk("post/profile", async (username)
 const PostSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    createPost: (state, action) => {
+      const newPost = {
+        id: Date.now(),
+        desc: action.payload.desc || "",
+        date: "Just now",
+        userId: action.payload.userId,
+        like: 0,
+        comment: 0,
+      };
+      if (action.payload.photo) {
+        newPost.photo = action.payload.photo;
+        newPost.mediaType = action.payload.mediaType || "image";
+      }
+      if (action.payload.taggedPeople?.length) {
+        newPost.taggedPeople = action.payload.taggedPeople;
+      }
+      state.posts.unshift(newPost);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getTimelinePost.pending, (state) => {
@@ -60,4 +79,5 @@ const PostSlice = createSlice({
   },
 });
 
+export const { createPost } = PostSlice.actions;
 export default PostSlice.reducer;

@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import { Box } from "@mui/material";
 
-const SIDEBAR_WIDTH = 280;
+const SIDEBAR_WIDTH = { md: 280, lg: 350 };
 const TOPBAR_HEIGHT = 56;
 
 export default function Home() {
@@ -14,7 +14,12 @@ export default function Home() {
       <Box
         component="main"
         sx={{
-          ml: { xs: 0, md: `${SIDEBAR_WIDTH}px` },
+          ml: {
+            xs: 0,
+            md: `${SIDEBAR_WIDTH.md}px`,
+            lg: `${SIDEBAR_WIDTH.lg}px`,
+          },
+          pl: { xs: 0, md: 2, lg: 3 },
           minHeight: `calc(100vh - ${TOPBAR_HEIGHT}px)`,
         }}
       >

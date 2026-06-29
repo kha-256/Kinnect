@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-
+import { formatTaggedStatus } from "../share/TagPeopleModal";
 export default function Post({ post, user }) {
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
@@ -21,6 +21,9 @@ export default function Post({ post, user }) {
   };
 
   if (!user) return null;
+
+  const mediaSrc = post.photo?.startsWith("blob:") ? post.photo : `${PF}${post.photo}`;
+  const isVideo = post.mediaType === "video";
 
   return (
     <Paper
@@ -44,10 +47,11 @@ export default function Post({ post, user }) {
               alt={user.username}
               sx={{ width: 32, height: 32, flexShrink: 0 }}
             />
-            <Typography variant="body2" fontWeight={500} noWrap>
-              {user.username}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap sx={{ flexShrink: 0 }}>
+            <Typography variant="body2" fontWeight={500} sx={{ lineHeight: 1.35 }}>
+              {post.taggedPeople?.length
+                ? formatTaggedStatus(user.username, post.taggedPeople)
+                : user.username}
+            </Typography>            <Typography variant="caption" color="text.secondary" noWrap sx={{ flexShrink: 0 }}>
               {post.date}
             </Typography>
           </Stack>
@@ -60,16 +64,31 @@ export default function Post({ post, user }) {
           {post.desc && (
             <Typography variant="body2">{post.desc}</Typography>
           )}
-          <Box
-            component="img"
-            src={`${PF}${post.photo}`}
-            alt=""
-            sx={{
-              width: "100%",
-              maxHeight: 500,
-              objectFit: "contain",
-            }}
-          />
+          {post.photo && (
+            isVideo ? (
+              <Box
+                component="video"
+                src={mediaSrc}
+                controls
+                sx={{
+                  width: "100%",
+                  maxHeight: 500,
+                  objectFit: "contain",
+                }}
+              />
+            ) : (
+              <Box
+                component="img"
+                src={mediaSrc}
+                alt=""
+                sx={{
+                  width: "100%",
+                  maxHeight: 500,
+                  objectFit: "contain",
+                }}
+              />
+            )
+          )}
         </Stack>
 
         <Stack

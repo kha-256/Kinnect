@@ -36,17 +36,17 @@ export default function Feed({ username }) {
         minWidth: 0,
         pb: 4,
         boxSizing: "border-box",
-        border: "1px solid red",
+       
       }}
     >
-      <Box sx={{ flex: 1, minWidth: 0 }}>
+      <Box sx={{ flex: { xs: 1, md: username ? 1 : "0 0 70%" }, minWidth: 0, pt:3 }}>
         <Stack
           spacing={0}
           sx={{
             width: "100%",
             maxWidth: 680,
             mx: "auto",
-            p: { xs: 1.5, sm: 2.5 },
+            px: { xs: 1.5, sm: 2.5 },
             boxSizing: "border-box",
           }}
         >
@@ -68,9 +68,13 @@ export default function Feed({ username }) {
         <Box
           sx={{
             display: { xs: "none", md: "block" },
-            flex: "0 0 300px",
+            flex: "0 0 30%",
             p: 2.5,
             boxSizing: "border-box",
+            position: "sticky",
+            top: 80,
+            alignSelf: "flex-start",
+            height: "fit-content",
           }}
         >
           <Stack spacing={3}>

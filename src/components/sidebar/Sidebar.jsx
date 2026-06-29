@@ -15,6 +15,7 @@ import { logout } from "../../store/slices/Userslice";
 import CloseFriend from "../closeFriend/CloseFriend";
 
 export default function Sidebar({ fixed = false }) {
+  const SIDEBAR_WIDTH = { md: 280, lg: 350 };
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const allUsers = useSelector((state) => state.postUser.allUsers);
@@ -39,8 +40,8 @@ export default function Sidebar({ fixed = false }) {
   return (
     <Box
       sx={{
-        width: { md: 280 },
-        maxWidth: { md: 280 },
+        width: SIDEBAR_WIDTH,
+        maxWidth: SIDEBAR_WIDTH,
         display: { xs: "none", sm: "none", md: "block" },
         flexShrink: 0,
         borderRight: "1px solid",
