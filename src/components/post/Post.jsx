@@ -26,13 +26,13 @@ export default function Post({ post, user }) {
     <Paper
       elevation={3}
       sx={{
-        width: { xs: "94%", sm: "94%" },
+        width: { xs: "100%", sm: "100%" },
         mx: "auto",
         mb: 3.75,
         borderRadius: 2.5,
         overflow: "hidden",
         maxWidth: "100%",
-        boxSizing: "border-box",
+        boxSizing: "border-box",mt:4
         
       }}
     >

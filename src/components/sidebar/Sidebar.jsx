@@ -14,7 +14,7 @@ import { Box, Button, Divider, List, ListItemButton, ListItemIcon, ListItemText,
 import { logout } from "../../store/slices/Userslice";
 import CloseFriend from "../closeFriend/CloseFriend";
 
-export default function Sidebar() {
+export default function Sidebar({ fixed = false }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const allUsers = useSelector((state) => state.postUser.allUsers);
@@ -39,16 +39,31 @@ export default function Sidebar() {
   return (
     <Box
       sx={{
-        flex: { xs: 0, sm: 0, md: 3.5, lg: 4 },
+        width: { md: 280 },
+        maxWidth: { md: 280 },
         display: { xs: "none", sm: "none", md: "block" },
-        height: "calc(100vh - 56px)",
-        overflowY: "auto",
-        position: "sticky",
-        top: 0,
+        flexShrink: 0,
         borderRight: "1px solid",
         borderColor: "divider",
-     
-        
+        bgcolor: "background.paper",
+        ...(fixed
+          ? {
+              position: "fixed",
+              left: 0,
+              top: 56,
+              height: "calc(100vh - 56px)",
+              overflowY: "auto",
+              overflowX: "hidden",
+              zIndex: 100,
+            }
+          : {
+              height: "calc(100vh - 56px)",
+              overflowY: "auto",
+              overflowX: "hidden",
+              position: "sticky",
+              top: 56,
+              alignSelf: "flex-start",
+            }),
       }}
     >
       <Box sx={{ px: { sm: 1, md: 2 }, py: 2 }}>
